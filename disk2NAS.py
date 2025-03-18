@@ -113,12 +113,13 @@ def move_data(source_path):
     print(f"Datos movidos exitosamente a {destination_path}")
 
 if __name__ == "__main__":
-    #source_path = input("Ingrese la ruta de los datos de origen: ")
-    #source_path = "/run/user/1000/gvfs/smb-share:server=10.10.20.21,share=expansion/AMISR/2024/20250102.001"
-    #move_data(source_path)
+        #source_path = input("Ingrese la ruta de los datos de origen: ")
+    #source_path = "/run/user/1000/gvfs/smb-share:server=10.10.20.21,share=expansion/AMISR/2024/20250102.002"
+    #-------------------------------------MODIFICAR RUTA SI CAMBIAMOS EL DISCO-----------------------#
     directory   = "/run/user/1000/gvfs/smb-share:server=10.10.20.21,share=expansion/AMISR/2024"
-    dir_doy     = "20250102.00"
-    list_dir_path= [os.path.join(directory,f"{dir_doy}{i}") for i in range(1,6)] # BARRIDO DEL 1 AL 5
+    #------------------------------------MODIFICAR EL DIA --------------------------------------------#
+    dir_doy     = "20250103.00"
+    list_dir_path= [os.path.join(directory,f"{dir_doy}{i}") for i in range(1,6)]
     for source_path in list_dir_path:
-        print("--------------------------------------------")
+        print("-----------------------------------------------------")
         move_data(source_path)
