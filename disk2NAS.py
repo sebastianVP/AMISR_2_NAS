@@ -120,5 +120,5 @@ if __name__ == "__main__":
     dir_doy     = "20250102.00"
     list_dir_path= [os.path.join(directory,f"{dir_doy}{i}") for i in range(1,6)] # BARRIDO DEL 1 AL 5
     for source_path in list_dir_path:
-	    move_data(source_path)
-            print("----------------------------------------")
+        print("--------------------------------------------")
+        move_data(source_path)
