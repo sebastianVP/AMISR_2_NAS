@@ -113,13 +113,20 @@ def move_data(source_path):
     print(f"Datos movidos exitosamente a {destination_path}")
 
 if __name__ == "__main__":
-        #source_path = input("Ingrese la ruta de los datos de origen: ")
+    #source_path = input("Ingrese la ruta de los datos de origen: ")
     #source_path = "/run/user/1000/gvfs/smb-share:server=10.10.20.21,share=expansion/AMISR/2024/20250102.002"
     #-------------------------------------MODIFICAR RUTA SI CAMBIAMOS EL DISCO-----------------------#
     directory   = "/run/user/1000/gvfs/smb-share:server=10.10.20.21,share=expansion/AMISR/2024"
     #------------------------------------MODIFICAR EL DIA --------------------------------------------#
-    dir_doy     = "20250103.00"
-    list_dir_path= [os.path.join(directory,f"{dir_doy}{i}") for i in range(1,6)]
-    for source_path in list_dir_path:
-        print("-----------------------------------------------------")
-        move_data(source_path)
+    input_days_list = [7,8,9,10,11]
+    mes             = "01"
+    current_year    = datetime.now().strftime("%Y")  # Obtiene el año actual
+    
+    list_dir_day = [f"{current_year}{mes}{day:02d}.00" for day in input_days_list]
+    print("LISTA DE DIRECTORIOS POR DIAS:", list_dir_day)
+    for dir_doy in list_dir_day:
+        list_dir_path= [os.path.join(directory,f"{dir_doy}{i}") for i in range(1,6)]
+        for source_path in list_dir_path:
+            print(f"---------------{source_path}-------------------------")
+            move_data(source_path)
+
