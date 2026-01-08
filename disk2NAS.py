@@ -1,14 +1,13 @@
-"""
-Autor: Alexander Valdez
-AKA: Magic 
-Fecha de creación: [18/03/2025]
-Descripción: [ENVIO DE DATA ISR-ESF A NAS AMISR-14]
-Versión: [1.0]
+""" Autor: Alexander Valdez AKA: Magic
+ Fecha de creación: [18/03/2025]
+ Descripción: [ENVIO DE DATA ISR-ESF A NAS AMISR-14]
+ Versión: [1.0] 
 """
 
 import os
 import shutil
 import logging
+import numpy as np
 from datetime import datetime
 from tqdm import tqdm
 
@@ -84,13 +83,13 @@ def move_data(source_path):
     relative_path = path_parts[1]  # 2024/20250101.001
 
     print("RELATIVE_PATH",relative_path)
-    print(relative_path.split("/")[1][0:4], relative_path.split("/")[1])
+    #print(relative_path.split("/")[1][0:4], relative_path.split("/")[1])
     year, folder_name = relative_path.split("/")[1][0:4], relative_path.split("/")[1]
     
     # Obtener el mes y año en formato adecuado
     date_obj = datetime.strptime(folder_name[:8], "%Y%m%d")
     formatted_month = date_obj.strftime("%Y_%m")
-    print("FORMATTED-MONTH",formatted_month)    
+    #print("FORMATTED-MONTH",formatted_month)    
     
     # Detectar el modo
     mode = detectMode(source_path)
@@ -113,20 +112,26 @@ def move_data(source_path):
     print(f"Datos movidos exitosamente a {destination_path}")
 
 if __name__ == "__main__":
-    #source_path = input("Ingrese la ruta de los datos de origen: ")
-    #source_path = "/run/user/1000/gvfs/smb-share:server=10.10.20.21,share=expansion/AMISR/2024/20250102.002"
+    #source_path      = input("Ingrese la ruta de los datos de origen: ")
+    #source_path      = "/run/user/1000/gvfs/smb-share:server=10.10.20.21,share=expansion/AMISR/2024/20250102.002"
     #-------------------------------------MODIFICAR RUTA SI CAMBIAMOS EL DISCO-----------------------#
-    directory   = "/run/user/1000/gvfs/smb-share:server=10.10.20.21,share=expansion/AMISR/2024"
+    directory         = "/run/user/1000/gvfs/smb-share:server=10.10.20.21,share=expansion/AMISR/2025"
     #------------------------------------MODIFICAR EL DIA --------------------------------------------#
-    input_days_list = [7,8,9,10,11]
-    mes             = "01"
-    current_year    = datetime.now().strftime("%Y")  # Obtiene el año actual
-    
-    list_dir_day = [f"{current_year}{mes}{day:02d}.00" for day in input_days_list]
+    #-------------------------------------MODIFICAR RUTA SI CAMBIAMOS EL DISCO-----------------------#
+    #directory         = "/run/user/1000/gvfs/smb-share:server=10.10.20.21,share=expansion-1/AMISR/2025"
+    #------------------------------------MODIFICAR EL DIA --------------------------------------------#
+
+    #input_days_list   = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15] # ya hicimos 16,..,28 FEBRERO
+    #input_days_list  = [7]
+    input_days_list   = np.arange(1,15).tolist() # desde el 10 de julio
+    mes               = "09" #"01"
+    current_year      = int(datetime.now().strftime("%Y"))  # Obtiene el año actual
+    previous_year     = current_year -1 # para que sea 2025
+    print("YEAR",previous_year)
+    list_dir_day      = [f"{previous_year}{mes}{day:02d}.00" for day in input_days_list]
     print("LISTA DE DIRECTORIOS POR DIAS:", list_dir_day)
     for dir_doy in list_dir_day:
-        list_dir_path= [os.path.join(directory,f"{dir_doy}{i}") for i in range(1,6)]
+        list_dir_path = [os.path.join(directory,f"{dir_doy}{i}") for i in range(1,8)]
         for source_path in list_dir_path:
             print(f"---------------{source_path}-------------------------")
             move_data(source_path)
-
