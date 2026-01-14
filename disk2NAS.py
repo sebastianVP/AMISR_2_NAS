@@ -26,6 +26,8 @@ def detectMode(source_path):
             return "ISR"
         elif filename.startswith("ESF"):
             return "ESF"
+        elif filename.startswith("LPD"):
+            return "LPD"
     
     print("Advertencia: No se encontró ningún archivo que indique ISR o ESF.")
     return "Desconocido"
@@ -69,7 +71,7 @@ def move_data(source_path):
     logging.basicConfig(filename="/home/soporte/Documents/AMISR_SCRIPT_NAS/transfer.log", level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 
     if not os.path.exists(source_path):
-        print(f"Error: La ruta de origen {source_path} no existe.")
+        print(f"Error: La ruta de origen {source_path} no existe.") 
         logging.error(f"La ruta de origen {source_path} no existe.")
         return
     
@@ -115,15 +117,16 @@ if __name__ == "__main__":
     #source_path      = input("Ingrese la ruta de los datos de origen: ")
     #source_path      = "/run/user/1000/gvfs/smb-share:server=10.10.20.21,share=expansion/AMISR/2024/20250102.002"
     #-------------------------------------MODIFICAR RUTA SI CAMBIAMOS EL DISCO-----------------------#
-    directory         = "/run/user/1000/gvfs/smb-share:server=10.10.20.21,share=expansion/AMISR/2025"
+    directory         = "/run/user/1000/gvfs/smb-share:server=10.10.20.21,share=expansion/AMISR/2025"#
     #------------------------------------MODIFICAR EL DIA --------------------------------------------#
     #-------------------------------------MODIFICAR RUTA SI CAMBIAMOS EL DISCO-----------------------#
     #directory         = "/run/user/1000/gvfs/smb-share:server=10.10.20.21,share=expansion-1/AMISR/2025"
+    #directory         = "/run/user/1000/gvfs/smb-share:server=10.10.20.21,share=expansion/AMISR/2025/20250926"
     #------------------------------------MODIFICAR EL DIA --------------------------------------------#
 
     #input_days_list   = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15] # ya hicimos 16,..,28 FEBRERO
     #input_days_list  = [7]
-    input_days_list   = np.arange(1,15).tolist() # desde el 10 de julio
+    input_days_list   = np.arange(15,31).tolist() # desde el 10 de julio
     mes               = "09" #"01"
     current_year      = int(datetime.now().strftime("%Y"))  # Obtiene el año actual
     previous_year     = current_year -1 # para que sea 2025
